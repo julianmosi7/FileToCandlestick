@@ -96,11 +96,17 @@ def write_to_csv(date, dateg, timeg, openl, high, low, close):
         for row in rows:
             wr.writerow(row)
 
-
     path = os.path.abspath('stundenkerzen.csv')
     finished = Label(root, text="Written to CSV! \n You can find the file under: \n" + path)
     finished.pack()
-    subprocess.Popen(f'explorer /select,"{path}"')
+
+    #opening file/folder
+    try:
+        subprocess.Popen(f'explorer /select,"{path}"')
+    except:
+        print("oh..your're working on a mac..")
+        subprocess.call(['open', path])
+
     print("Written to CSV!")
 
     print_chart(date, openl, high, low, close)
